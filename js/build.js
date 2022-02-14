@@ -20,7 +20,13 @@ const maxSlide = slide.length - 1;
 loadEvent()
 function loadEvent() {
     navUl.addEventListener('click', smoothScroll);
-    footerUl.addEventListener('click', smoothScroll);
+    footerUl.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(e.target.classList.contains('footer-link')) {
+            const id = e.target.getAttribute('href');
+            document.querySelector(id).scrollIntoView({behavior: 'smooth'});
+        }
+    });
     user.addEventListener('click', () => {
         document.querySelector('.login-content').classList.toggle('pop');
     })
@@ -58,7 +64,7 @@ function openMenu() {
 }
 function closeMenu() {
     hamburger.classList.remove('active');
-    navUl.classList.toggle('active');
+    navUl.classList.remove('active');
 }
 function slideImg(currSlide) {
     slide.forEach((s,i) => s.style.transform = `translateX(${100 * (i - currSlide)}%)`);
